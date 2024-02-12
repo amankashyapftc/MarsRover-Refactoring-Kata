@@ -30,7 +30,8 @@ public class RoverTest {
     public void testLeftTurnOfRoverFromCurrentPosition() {
         Plateau plateau = new Plateau(5,5);
         Rover rover = new Rover(2,3,Direction.E,plateau);
-        String result = rover.move("L");
+        rover.turnLeft();
+        String result = rover.toString();
         assertEquals("2 3 N", result);
     }
 
@@ -38,7 +39,8 @@ public class RoverTest {
     public void testRightTurnOfRoverFromCurrentPosition() {
         Plateau plateau = new Plateau(5,5);
         Rover rover = new Rover(1,1,Direction.S,plateau);
-        String result = rover.move("R");
+        rover.turnRight();
+        String result = rover.toString();
         assertEquals("1 1 W", result);
     }
 
@@ -46,7 +48,8 @@ public class RoverTest {
     public void testMoveForwardOfRoverFromCurrentPositionWhileFacingNorth() {
         Plateau plateau = new Plateau(5,5);
         Rover rover = new Rover(3,3,Direction.N,plateau);
-        String result = rover.move("M");
+        rover.moveForward();
+        String result = rover.toString();
         assertEquals("3 4 N", result);
     }
 
@@ -54,7 +57,8 @@ public class RoverTest {
     public void testMoveForwardOfRoverFromCurrentPositionWhileFacingEast() {
         Plateau plateau = new Plateau(5,5);
         Rover rover = new Rover(2,1,Direction.E,plateau);
-        String result = rover.move("M");
+        rover.moveForward();
+        String result = rover.toString();
         assertEquals("3 1 E", result);
     }
 
@@ -62,7 +66,8 @@ public class RoverTest {
     public void testMoveForwardOfRoverFromCurrentPositionWhileFacingWest() {
         Plateau plateau = new Plateau(5,5);
         Rover rover = new Rover(1,1,Direction.W,plateau);
-        String result = rover.move("M");
+        rover.moveForward();
+        String result = rover.toString();
         assertEquals("0 1 W", result);
     }
 
@@ -70,23 +75,17 @@ public class RoverTest {
     public void testMoveForwardOfRoverFromCurrentPositionWhileFacingSouth() {
         Plateau plateau = new Plateau(5,5);
         Rover rover = new Rover(3,1,Direction.S,plateau);
-        String result = rover.move("M");
+        rover.moveForward();
+        String result = rover.toString();
         assertEquals("3 0 S", result);
     }
 
-    @Test
-    public void testMultipleDirectionMove() {
-        Plateau plateau = new Plateau(5,5);
-        Rover rover = new Rover(1,2,Direction.N,plateau);
-        String result = rover.move("LMLMLMLMM");
-        assertEquals("1 3 N", result);
-    }
 
     @Test
-    public void testTwoWithMultipleDirectionMove() {
+    public void testIfRoverGoesOutOfBondItWillThrowAnError() {
         Plateau plateau = new Plateau(5,5);
-        Rover rover = new Rover(3,3,Direction.E,plateau);
-        String result = rover.move("MMRMMRMRRM");
-        assertEquals("5 1 E", result);
+        Rover rover = new Rover(5,5,Direction.N,plateau);
+
+        assertThrows(UnsupportedOperationException.class, rover::moveForward);
     }
 }

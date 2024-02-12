@@ -16,64 +16,28 @@ public class Rover {
         this.plateau = plateau;
     }
 
+    public void moveForward() {
+        int newXCoordinate = this.x+this.direction.coordinateXIncrement();
+        int newYCoordinate = this.y+this.direction.coordinateYIncrement();
 
-    public String move(String instructions) {
-        for(char instruction : instructions.toCharArray()) {
-            if (instruction == 'L') turnLeft();
-            else if(instruction == 'R') turnRight();
-            else if(instruction == 'M') moveForward();
+        if(this.plateau.isValidPosition(newXCoordinate,newYCoordinate)){
+            this.x = newXCoordinate;
+            this.y = newYCoordinate;
+        }else{
+            throw new UnsupportedOperationException("Try to move out of range.");
         }
+
+    }
+
+    public void turnRight() {
+        this.direction=this.direction.turnRight();
+    }
+
+    public void turnLeft() {
+        this.direction = this.direction.turnLeft();
+    }
+    @Override
+    public String toString(){
         return x + " " + y + " " + direction;
-    }
-
-    private void moveForward() {
-        switch (direction) {
-            case N:
-                if(plateau.isValidPosition(x,y+1)) y++;
-                break;
-            case E:
-                if(plateau.isValidPosition(x+1,y)) x++;
-                break;
-            case S:
-                if(plateau.isValidPosition(x,y-1)) y--;
-                break;
-            case W:
-                if(plateau.isValidPosition(x-1,y)) x--;
-                break;
-        }
-    }
-
-    private void turnRight() {
-        switch (direction) {
-            case N:
-                direction = Direction.E;
-                break;
-            case E:
-                direction = Direction.S;
-                break;
-            case S:
-                direction = Direction.W;
-                break;
-            case W:
-                direction = Direction.N;
-                break;
-        }
-    }
-
-    private void turnLeft() {
-        switch (direction) {
-            case N:
-                direction = Direction.W;
-                break;
-            case E:
-                direction = Direction.N;
-                break;
-            case S:
-                direction = Direction.E;
-                break;
-            case W:
-                direction = Direction.S;
-                break;
-        }
     }
 }
